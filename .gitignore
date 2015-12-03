@@ -1,0 +1,4 @@
+/renders/*
+!/renders/info.txt
+
+.DS_Store
