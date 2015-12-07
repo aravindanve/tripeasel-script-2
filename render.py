@@ -55,7 +55,11 @@ common_repl = {
     'image_dir': 'Blogger_Images/',
 }
 
+blogger_count = 0;
+
 for blogger in bloggers:
+    blogger_count += 1
+
     for template_dir in ['FB/', 'Twitter/']:
         for template_file in [
             '17pTemplate.jpg', 
@@ -64,11 +68,13 @@ for blogger in bloggers:
             def repl(m):
                 if m.group('key').strip() == 'template_file':
                     return template_dir + template_file
-                elif m.group('key') in common_repl:
+                elif m.group('key').strip() in common_repl:
                     return common_repl[m.group('key')]
                 elif m.group('key').strip() == 'special_code':
                     newkey = m.group('key').strip() + '_' + template_file[:2]
                     return blogger[newkey]
+                elif m.group('key').strip() == 'count':
+                    return str(blogger_count)
                 else:
                     return blogger[m.group('key')]
             _markup = re.sub(r'{{\s*(?P<key>[^}{]+)\s*}}', repl, \

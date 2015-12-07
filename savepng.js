@@ -18,13 +18,19 @@ page.open(address, function (status) {
             var clips = [], elems = document.querySelectorAll('.card');
             for (var i = 0; i < elems.length; i++) {
                 var boundingRect = elems[i].getBoundingClientRect();
+                var clipName = elems[i].getAttribute('data-count') + '-' +
+                    elems[i].getAttribute('data-savename');
+                var file = (clipName? clipName : 'card-' + (i + 1)) + '.png';
                 clips.push({
-                    top: boundingRect.top,
-                    left: boundingRect.left,
-                    width: boundingRect.width,
-                    height: boundingRect.height
+                    'clip': {
+                        top: boundingRect.top,
+                        left: boundingRect.left,
+                        width: boundingRect.width,
+                        height: boundingRect.height
+                    },
+                    'file': file
                 });
-                console.log('got card ' + (i + 1));
+                console.log('got card ' + file);
             }
             return clips;
         });
@@ -32,9 +38,9 @@ page.open(address, function (status) {
         var count = 1;
 
         for (var i = 0; i < clips.length; i++) {
-            page.clipRect = clips[i];
-            page.render(outputDir + 'card-' + count + '.png');
-            console.log('saved card ' + (i + 1));
+            page.clipRect = clips[i].clip;
+            page.render(outputDir +  clips[i].file);
+            console.log('saved card ' + clips[i].file);
             count++;
         }
 
