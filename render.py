@@ -12,8 +12,6 @@ wb = load_workbook(filename='Special Code.xlsx')
 sheet_names = wb.get_sheet_names()
 sheet = wb[sheet_names[0]]
 
-p1 = re.compile(r'\.jpg\s*$', re.IGNORECASE)
-
 rowcount = 0
 for row in sheet:
     cellcount = 0
